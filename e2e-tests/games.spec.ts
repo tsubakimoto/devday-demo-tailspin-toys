@@ -1,6 +1,18 @@
 import { test, expect, type Response } from '@playwright/test';
 
 test.describe('Game Listing and Navigation', () => {
+  test('should display a five-star rating on every game card', async ({ page }) => {
+    await page.goto('/');
+
+    const gameCards = page.getByTestId('game-card');
+    const ratings = page.getByTestId('game-rating');
+    await expect(ratings).toHaveCount(await gameCards.count());
+    for (const rating of await ratings.all()) {
+      await expect(rating).toBeVisible();
+      await expect(rating).toContainText(/(?:[★½☆]{5}\d\.\d|まだ評価がありません)/);
+    }
+  });
+
   test('should display games with titles on index page', async ({ page }) => {
     await test.step('Navigate to homepage', async () => {
       await page.goto('/');

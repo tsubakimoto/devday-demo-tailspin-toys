@@ -15,8 +15,9 @@ describe('clampRating', () => {
 });
 
 describe('formatStarRating', () => {
-    it('returns a not-rated message when rating is null', () => {
+    it('returns the supplied not-rated message when rating is null', () => {
         expect(formatStarRating(null)).toBe('Not yet rated');
+        expect(formatStarRating(null, 'まだ評価がありません')).toBe('まだ評価がありません');
     });
 
     it('renders only full and empty stars for whole numbers', () => {
